@@ -36,13 +36,13 @@ export class UserscomponentComponent implements OnInit {
 
   loadUsersList(){
     this.selection.clear();
-		const queryParams : QueryParamsModel = {
-			filter : this.filterConfiguration(),
-			sortOrder : 'asc',
-			sortField : '',
-			pageNumber : 0,
-			pageSize : 10
-		};
+		const queryParams = new QueryParamsModel(
+			this.filterConfiguration(),
+			'asc',
+			'',
+			0,
+			10
+		);
 		// Call request from server
 		this.store.dispatch(new UsersPageRequested({ page: queryParams }));
 		this.selection.clear();
