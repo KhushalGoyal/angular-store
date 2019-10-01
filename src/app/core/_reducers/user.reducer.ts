@@ -5,14 +5,13 @@ import { EntityState, EntityAdapter, createEntityAdapter, Update } from '@ngrx/e
 import { UserActions, UserActionTypes } from '../_action/user.action';
 // Models
 import { UserModel } from '../_models/user.model';
-import { QueryParamsModel } from '../_base/crud';
 
 export interface UsersState extends EntityState<UserModel> {
     listLoading: boolean;
     actionsloading: boolean;
     totalCount: number;
     lastCreatedUserId: number;
-    lastQuery: QueryParamsModel;
+    lastQuery: any;
     showInitWaitingMessage: boolean;
 }
 
@@ -24,7 +23,7 @@ export const initialUsersState: UsersState = adapter.getInitialState({
     actionsloading: false,
     totalCount: 0,
     lastCreatedUserId: undefined,
-    lastQuery: new QueryParamsModel({}),
+    lastQuery:{},
     showInitWaitingMessage: true
 });
 
@@ -64,7 +63,7 @@ export function usersReducer(state = initialUsersState, action: UserActions): Us
         case UserActionTypes.ManyUsersDeleted: return adapter.removeMany(action.payload.ids, state);
         case UserActionTypes.UsersPageCancelled: {
             return {
-                ...state, listLoading: false, lastQuery: new QueryParamsModel({})
+                ...state, listLoading: false, lastQuery: new Object({})
             };
         }
         case UserActionTypes.UsersPageLoaded: {

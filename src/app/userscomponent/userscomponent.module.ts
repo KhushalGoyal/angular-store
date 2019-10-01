@@ -8,6 +8,7 @@ import { usersReducer, UserEffects, UsersService } from '../core';
 import { UserscomponentComponent } from './userscomponent.component';
 
 import { SharedModule } from '../core/shared.module';
+import { HttpUtilsService } from '../core/_base/utils/http-utils.service';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { SharedModule } from '../core/shared.module';
 		EffectsModule.forFeature([UserEffects]),
   ],
   providers:[
-    UsersService
+    UsersService,
+    HttpUtilsService
   ]
 })
 

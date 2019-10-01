@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 // RxJS
 import { Observable } from 'rxjs';
-// CRUD
-import { HttpUtilsService, QueryParamsModel, QueryResultsModel } from '../_base/crud';
+
 // Models
 import { UserModel } from '../_models/user.model';
+import { HttpUtilsService } from '../_base/utils/http-utils.service';
+import { QueryParamsModel } from '../_base/models/http-param.model';
 
-const API_CUSTOMERS_URL = 'https://jsonplaceholder.typicode.com/users';
+const API_CUSTOMERS_URL = 'https://jsonplaceholder.typicode.com';
 
 @Injectable()
 export class UsersService {
@@ -33,16 +34,13 @@ export class UsersService {
 	// Method from server should return QueryResultsModel(items: any[], totalsCount: number)
 	// items => filtered/sorted result
 	// Server should return filtered/sorted result
-	findUsers(queryParams: QueryParamsModel): Observable<QueryResultsModel> {
+	findUsers(queryParams: QueryParamsModel): Observable<any> {
 		// Note: Add headers if needed (tokens/bearer)
 		const httpHeaders = this.httpUtils.getHTTPHeaders();
 		const httpParams = this.httpUtils.getFindHTTPParams(queryParams);
 
-		const url = API_CUSTOMERS_URL + '/find';
-		return this.http.get<QueryResultsModel>(url, {
-			headers: httpHeaders,
-			params:  httpParams
-		});
+		const url = API_CUSTOMERS_URL + '/users';
+		return this.http.get<any>(url);
 	}
 
 	// UPDATE => PUT: update the user on the server
@@ -72,6 +70,6 @@ export class UsersService {
 		const url = API_CUSTOMERS_URL + '/deleteUsers';
 		const httpHeaders = this.httpUtils.getHTTPHeaders();
 		const body = { userIdsForDelete: ids };
-		return this.http.put<QueryResultsModel>(url, body, { headers: httpHeaders} );
+		return this.http.put<any>(url, body, { headers: httpHeaders} );
 	}
 }

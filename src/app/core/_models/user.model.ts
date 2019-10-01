@@ -1,6 +1,4 @@
-import { BaseModel } from '../_base/crud';
-
-export class UserModel  extends BaseModel {
+export class UserModel {
 	id: number;
 	name: string;
 	username: string;

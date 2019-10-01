@@ -1,8 +1,6 @@
 // NGRX
 import { Action } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
-// CRUD
-import { QueryParamsModel } from '../_base/crud';
 // Models
 import { UserModel } from '../_models/user.model';
 
@@ -59,12 +57,12 @@ export class ManyUsersDeleted implements Action {
 
 export class UsersPageRequested implements Action {
     readonly type = UserActionTypes.UsersPageRequested;
-    constructor(public payload: { page: QueryParamsModel }) { }
+    constructor(public payload: { page: any }) { }
 }
 
 export class UsersPageLoaded implements Action {
     readonly type = UserActionTypes.UsersPageLoaded;
-    constructor(public payload: { users: UserModel[], totalCount: number, page: QueryParamsModel }) { }
+    constructor(public payload: { users: UserModel[], totalCount: number, page: any }) { }
 }
 
 export class UsersPageCancelled implements Action {

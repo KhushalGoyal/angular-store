@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 
-import { UserModel, UsersDataSource, UsersPageRequested, OneUserDeleted, ManyUsersDeleted, UsersStatusUpdated } from './core/';
+import { UserModel, UsersPageRequested, OneUserDeleted, ManyUsersDeleted, UsersStatusUpdated } from './core/';
 
 import { State } from './core/reducers';
 
 import { debounceTime, distinctUntilChanged, tap, skip, delay, take } from 'rxjs/operators';
-import { QueryParamsModel } from './core/_base/crud';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -17,7 +16,6 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent implements OnInit{
   title = 'angular-store';
-  dataSource : UsersDataSource;
   results: UserModel[] = [];
 
   constructor(

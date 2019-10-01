@@ -2,8 +2,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 // Lodash
 import { each } from 'lodash';
-// CRUD
-import { QueryResultsModel, HttpExtenstionsModel } from '../_base/crud';
 // State
 import { UsersState } from '../_reducers/user.reducer';
 import { UserModel } from '../_models/user.model';
@@ -42,8 +40,7 @@ export const selectUsersInStore = createSelector(
         each(usersState.entities, element => {
             items.push(element);
         });
-        const httpExtension = new HttpExtenstionsModel();
-        const result: UserModel[] = httpExtension.sortArray(items, usersState.lastQuery.sortField, usersState.lastQuery.sortOrder);
-        return new QueryResultsModel(result, usersState.totalCount, '');
+        const result: UserModel[] = items;
+        return result
     }
 );

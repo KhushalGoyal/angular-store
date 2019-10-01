@@ -1,4 +1,3 @@
-import { QueryParamsModel } from '../_base/crud/models/query-models/query-params.model';
 import { forkJoin } from 'rxjs';
 // Angular
 import { Injectable } from '@angular/core';
@@ -7,8 +6,6 @@ import { mergeMap, map, tap, delay } from 'rxjs/operators';
 // NGRX
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-// CRUD
-import { QueryResultsModel } from '../_base/crud';
 // Services
 import { UsersService } from '../_services/user.service';
 // State
@@ -45,11 +42,11 @@ export class UserEffects {
             return forkJoin(requestToServer, lastQuery);
         }),
         map(response => {
-            const result: QueryResultsModel = response[0];
-            const lastQuery: QueryParamsModel = response[1];
+            const result: any[] = response[0];
+            const lastQuery: any = response[1];
             const pageLoadedDispatch = new UsersPageLoaded({
-                users: result.items,
-                totalCount: result.totalCount,
+                users: result,
+                totalCount: result.length,
                 page: lastQuery
             });
             return pageLoadedDispatch;

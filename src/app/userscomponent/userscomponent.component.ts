@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersDataSource, UserModel, UsersPageRequested } from '../core';
+import { UserModel, UsersPageRequested } from '../core';
 import { Store } from '@ngrx/store';
 import { State } from '../core/reducers';
 import { skip, distinctUntilChanged, take, delay } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
-import { QueryParamsModel } from '../core/_base/crud';
+import { QueryParamsModel } from '../core/_base/models/http-param.model';
 
 @Component({
   selector: 'app-userscomponent',
@@ -13,7 +13,7 @@ import { QueryParamsModel } from '../core/_base/crud';
   styleUrls: ['./userscomponent.component.css']
 })
 export class UserscomponentComponent implements OnInit {
-  dataSource : UsersDataSource;
+  dataSource : any;
   selection = new SelectionModel<UserModel>(true, []);
   filterStatus: string = '';
 	filterType: string = '';
@@ -24,29 +24,25 @@ export class UserscomponentComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dataSource = new UsersDataSource(this.store)
-    const entitiesSubscription = this.dataSource.entitySubject.pipe(
-			skip(1),
-			distinctUntilChanged()
-		).subscribe(res => {
-			console.log(res);
-    });
     // First load
 		of(undefined).pipe(take(1), delay(1000)).subscribe(() => { // Remove this line, just loading imitation
 			this.loadUsersList();
 		}); // Remove this line, just loading imitation
+		this.store.select('users').subscribe(result => {
+			console.log(result)
+		})
   }
 
 
   loadUsersList(){
     this.selection.clear();
-		const queryParams = new QueryParamsModel(
-			this.filterConfiguration(),
-			'asc',
-			'',
-			0,
-			10
-		);
+		const queryParams : QueryParamsModel = {
+			filter : this.filterConfiguration(),
+			sortOrder : 'asc',
+			sortField : '',
+			pageNumber : 0,
+			pageSize : 10
+		};
 		// Call request from server
 		this.store.dispatch(new UsersPageRequested({ page: queryParams }));
 		this.selection.clear();

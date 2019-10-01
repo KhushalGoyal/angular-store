@@ -3,10 +3,6 @@
 
 export { UserModel } from "./_models/user.model";
 
-// DataSource
-
-export { UsersDataSource } from './_data-source/users.datasource';
-
 // Actions
 
 export {
